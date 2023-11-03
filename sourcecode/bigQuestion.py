@@ -15,7 +15,7 @@ from datetime import date
 
 URL = 'https://chat.openai.com/'
 QUESTION_PROMPT = 'Referencing the resume and job description give a detailed answer to this question in the first person. Be casual, personable, warm and inviting. No extra comments. Keep response around 300 words. Do not say based on the job description.'
-TASK = "This is the job. split the job description into Responsibilities, Requirements and other and remember them. Respond with the words only 'I understand.'"
+TASK = "Split the job description into Responsibilities, Requirements and other and remember them. Respond with the words only 'I understand.'"
 
 
 def startup() -> None:
@@ -34,6 +34,7 @@ def startup() -> None:
 
         options = webdriver.ChromeOptions()
         options.headless = False
+        # would like to run in headless mood but get hit with cloudflare
         # options.binary_location = ".\\chrome-win\\chrome.exe"
         # options.set_capability("detach", True)
         with open('user_info\\query.json', 'r') as file:
@@ -47,19 +48,15 @@ def startup() -> None:
         HEADER = info['name'] + '\n' + info['address'] + '\n' + info['what is your current location'] + ' ' + info['zip'] + '\n' + info['email'] + '\n' + info[
             'phone'] + '\n' + str(date.today().strftime('%b, %d')) + '\n\n'
 
-        driver = uc.Chrome(options=options, version_main=117)
+        driver = uc.Chrome(options=options, version_main=117, enable_cdp_events=True)
+
         driver.set_window_size(1000, 1000)
         driver.get(URL)
-        time.sleep(1)
+
         WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//div[text() = 'Log in']"))).click()
         WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//button[@data-provider = 'google']"))).click()
         time.sleep(.1)
-        WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//input[@type = 'email']"))).send_keys(info['chatgpt email'])
-        WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//span[text() = 'Next']"))).click()
-        time.sleep(.1)
-        WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//input[@type = 'password']"))).send_keys(info['chatgpt password'])
-        WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//span[text() = 'Next']"))).click()
-        time.sleep(1)
+        sharedUtil.google_account_login(info['chatgpt password'], info['chatgpt email'], driver)
         WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'Okay')]"))).click()
 
 
@@ -73,7 +70,7 @@ def ask_question(crystal_ball, message: str) -> str:
     time.sleep(.1)
     crystal_ball.send_keys(Keys.ENTER)
 
-    #class text_to_change(object):
+    # class text_to_change(object):
     #    def __init__(self, locator):
     #        self.locator = locator
 
@@ -86,15 +83,15 @@ def ask_question(crystal_ball, message: str) -> str:
     #        return actual_text1 == actual_text2
 
     count = len(driver.find_elements(By.XPATH, text_ref))
-    text=''
+    text = ''
     while count >= len(driver.find_elements(By.XPATH, text_ref)) or text != driver.find_elements(By.XPATH, text_ref)[-1].text:
         if len(driver.find_elements(By.XPATH, text_ref)) > 0:
             text = driver.find_elements(By.XPATH, text_ref)[-1].text
         time.sleep(.5)
 
-    #WebDriverWait(driver, 10).until(
+    # WebDriverWait(driver, 10).until(
     #    text_to_change(text_ref)
-    #)
+    # )
     return driver.find_elements(By.XPATH, text_ref)[-1].text
 
 

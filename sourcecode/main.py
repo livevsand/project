@@ -37,7 +37,7 @@ class JobSite(ABC):
         '''
         retrieve job info from site and save as object
         '''
-        #t= self.driver.find_elements(By.XPATH, self.job)
+        # t= self.driver.find_elements(By.XPATH, self.job)
         WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located((By.XPATH, self.job)))
         description = self.driver.find_element(By.XPATH, self.job).text
         description = description.replace('About the job', '')
@@ -45,6 +45,8 @@ class JobSite(ABC):
         description = description.replace('\n', '')
         description = description[:2000]
         title = jobhostUtil.strip_non_ascii(x.find_element(By.XPATH, self.title_ref).text)
+        if '\n' in title:
+            title = title.splt('\n')[0]
         # glassdoor takes company title plus rating
         company_name = jobhostUtil.strip_non_ascii(x.find_element(By.XPATH, self.company_ref).text)
         location = jobhostUtil.strip_non_ascii(x.find_element(By.XPATH, self.location_ref).text)
@@ -113,6 +115,7 @@ class JobSite(ABC):
 
                 except Exception:
                     print('missed job post')
+
                     traceback.print_exc()
                     self.driver.switch_to.window(self.driver.window_handles[0])
                     time.sleep(.1)
@@ -151,9 +154,9 @@ class LinkedIn(JobSite):
 class Glassdoor(JobSite):
     def __init__(self, url: str, chatGPT: bool):
         super().__init__(url, chatGPT)
-        #self.job_grid = "//li[starts-with(@class,'react-job-listing')]"
+        # self.job_grid = "//li[starts-with(@class,'react-job-listing')]"
         self.job_grid = "//li[starts-with(@class,'JobsList')]"
-        #self.job = "//div[@class='jobDescriptionContent desc']"
+        # self.job = "//div[@class='jobDescriptionContent desc']"
         self.job = "//div[contains(@class,'JobDetails_jobDescriptionWrapper__BTDTA')]"
         self.next_button = "//button[starts-with(@class,'nextButton')]"
         self.company_ref = "//div[starts-with(@class,'EmployerProfile_employerInfo')]"
@@ -172,22 +175,38 @@ class Glassdoor(JobSite):
 class Indeed(JobSite):
     def __init__(self, url: str, chatGPT: bool):
         super().__init__(url, chatGPT)
-        self.job_grid = "//ul[starts-with(@class,'jobsearch')]/li"
+
+        # self.job_grid = "//ul[starts-with(@class,'jobsearch')]/li"
+        self.job_grid = "//div[@id='mosaic-provider-jobcards']/ul/li"
         self.job = "//div[@id='jobDescriptionText']"
         self.next_button = "//a[contains(@data-testid,'page-next')]"
-        self.company_ref = "//span[@class='companyName']"
-        self.title_ref = "//span[contains(@id,'jobTitle')]"
-        self.location_ref = "//div[@class='companyLocation']"
+        # self.company_ref = "//span[@class='companyName']"
+        self.company_ref = "//div[@data-company-name='true']/span/a"
+        # self.title_ref = "//span[contains(@id,'jobTitle')]"
+        self.title_ref = "//h2[contains(@class,'jobsearch-JobInfoHeader-title')]/span"
+        self.location_ref = "//div[@data-testid='job-location'] | //div[contains(@data-testid,'Location')]"
+        # self.location_ref = "//div[@class='companyLocation']"
         self.apply_ref = "//button[@id='indeedApplyButton'] | //button[contains(@aria-label,'Apply on company site')] "
+
         self.startup()
+        time.sleep(1)
+        self.driver.get(url)
+        time.sleep(.5)
+        self.driver.switch_to.frame(self.driver.find_element(By.XPATH, "//iframe[@title='Sign in with Google Dialog']"))
+        time.sleep(1)
+        self.driver.find_element(By.XPATH, "//div[contains(text(),'Continue as ')]").click()
+        time.sleep(2)
+        self.driver.switch_to.default_content()
 
     def startup(self):
-        util.indeed_login(self.driver,self.user_info)
+        util.indeed_login(self.driver, self.user_info)
 
-def start(URL,chatGPT):
+
+def start(URL, chatGPT):
     try:
         if 'linkedin' in URL:
             LinkedIn(URL, chatGPT).find_jobs(50)
+
         elif 'indeed' in URL:
             Indeed(URL, chatGPT).find_jobs(50)
         elif 'glassdoor' in URL:
@@ -195,18 +214,19 @@ def start(URL,chatGPT):
         else:
             raise NotImplementedError
         print('done')
-        print(crash)
 
     except Exception:
         traceback.print_exc()
         print('error')
-        time.sleep(10000)
-        time.sleep(10000)
-        time.sleep(10000)
-        time.sleep(10000)
-        time.sleep(10000)
+        raise SystemExit
+
+
 if __name__ == '__main__':
-    URL = sys.argv[1]
-    chatGPT = sys.argv[2] == 'True'
-    
-    start(URL,chatGPT)
+    if len(sys.argv) > 0:
+        URL = sys.argv[1]
+        chatGPT = sys.argv[2] == 'True'
+
+    URL = 'https://www.linkedin.com/jobs/search/?currentJobId=3743846126&distance=25&f_TPR=r604800&geoId=103644278&keywords=machine%20learning&origin=JOB_SEARCH_PAGE_JOB_FILTER'
+    URL = 'https://www.indeed.com/jobs?q=machine+learning&l=&from=searchOnHP&vjk=d090c7b218f833ee'
+    chatGPT = True
+    start(URL, chatGPT)

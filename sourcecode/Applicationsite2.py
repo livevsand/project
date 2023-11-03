@@ -168,7 +168,7 @@ class Workday(GenericApplicationSite):
                 EC.element_to_be_clickable((By.XPATH, "//input[@aria-required='true']")))
             login = self.driver.find_elements(By.XPATH, "//input[@aria-required='true']")
             login[0].send_keys(self.user_info['workday email'])
-            login[1].send_keys(self.user_info["workday paasword"])
+            login[1].send_keys(self.user_info["workday password"])
 
             util.strong_click(self.driver.find_element(By.XPATH, "//button[text()='Sign In']"), self.driver)
         except TimeoutException:
@@ -361,7 +361,7 @@ class ICIMS(GenericApplicationSite):
         try:
             self.driver.switch_to.default_content()
             time.sleep(.5)
-            self.driver.find_element(By.XPATH, "//input[@type = 'password']").send_keys(self.user_info['icims paasword'])
+            self.driver.find_element(By.XPATH, "//input[@type = 'password']").send_keys(self.user_info['icims password'])
             time.sleep(.5)
             # hidden element causing problems i do not like this solution
             self.driver.find_elements(By.XPATH, "//button[@type = 'submit']")[1].click()

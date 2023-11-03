@@ -35,13 +35,29 @@ def strong_click(y: WebElement, driver: webdriver) -> None:
     except (ElementClickInterceptedException, ElementNotInteractableException):
         pass
 
+
+def google_account_login(password,email,driver):
+    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//input[@type = 'email']"))).send_keys(email)
+    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//span[text() = 'Next']"))).click()
+    time.sleep(.1)
+    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//input[@type = 'password']"))).send_keys(password)
+    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//span[text() = 'Next']"))).click()
+    time.sleep(1)
+
 def indeed_login(driver, user_info):
     time.sleep(.1)
+    '''
     try:
         driver.find_element(By.XPATH, "//a[text() = 'Sign in' and contains(@href,'login')]").click()
     except:
         pass
+    '''
+    driver.get('https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&ifkv=AVQVeyyCBJPrKGzv6Rv2eA3gdl9_kQ5VkNMnFzQIG987MhtmbQLSPcqNldHxvx6HIYZYpwbSYl2gXQ&rip=1&sacu=1&service=mail&flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S755948691%3A1698770732575372&theme=glif')
     time.sleep(0.1)
+    google_account_login(user_info['indeed password'],user_info['indeed email'],driver)
+
+
+    '''
     email = WebDriverWait(driver, 1).until(
         EC.element_to_be_clickable(
            driver.find_element(By.XPATH, "//input[contains(@type,'email')]")))
@@ -55,19 +71,20 @@ def indeed_login(driver, user_info):
         EC.element_to_be_clickable(
             driver.find_element(By.XPATH, "//a[contains(@id,'password-fallback')]"))).click()
     time.sleep(0.5)
+    
     password = WebDriverWait(driver, 5).until(
         EC.element_to_be_clickable(
             driver.find_element(By.XPATH, "//input[contains(@type,'password')]")))
-
     type_string(password, user_info['indeed password'])
     driver.find_element(By.XPATH, "//button[contains(@type,'submit')]").click()
-
+    
     if fuck_captcha(driver):
         password = WebDriverWait(driver, 5).until(
             EC.element_to_be_clickable(
                 driver.find_element(By.XPATH, "//input[contains(@type,'password')]")))
         type_string(password, user_info['indeed password'])
         driver.find_element(By.XPATH, "//button[contains(@type,'submit')]").click()
+    '''
     time.sleep(0.1)
 
 def type_string(elem: WebElement, text: str) -> None:
@@ -77,9 +94,10 @@ def type_string(elem: WebElement, text: str) -> None:
         r = random.uniform(0, .1)
         time.sleep(r)
 
-
+#do we use this anymore?
 def fuck_captcha(driver: webdriver) -> bool:
     time.sleep(1)
+
     try:
         driver.switch_to.frame(driver.find_element(By.XPATH, "//iframe[contains(@title,'hCaptcha')]"))
         driver.find_element(By.XPATH, "//div[@id='checkbox']").click()

@@ -168,7 +168,7 @@ def datebox(y: WebElement) -> None:
 def button(y: list, res: str) -> None:
     for x in y:
         for r in res.split('|'):
-            if x.text.lower() == r:
+            if x.text.lower() == r.lower():
                 x.click()
                 return
     y[0].click()
@@ -263,7 +263,7 @@ def combobox(t: WebElement, res: str, driver: webdriver) -> None:
         for z in options:
 
             for r in res.split('|'):
-                if ('yes' in z.text.lower() or 'no' == z.text.lower()) and r != 'no':
+                if ('yes' in z.text.lower() or 'no' == z.text.lower()) and r.lower() != 'no':
                     r = 'yes'
                 if r.lower() == z.text.lower():
                     util.strong_click(z, driver)
@@ -325,7 +325,7 @@ def radio_button(t: list, res: str, driver: webdriver) -> None:
         return
     for y in t:
         for r in res.split('|'):
-            if r in y.accessible_name.lower():
+            if r.lower() in y.accessible_name.lower():
                 util.strong_click(y, driver)
                 return
     print("could not find response")

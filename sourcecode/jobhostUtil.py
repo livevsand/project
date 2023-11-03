@@ -4,6 +4,7 @@ import time
 
 
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -107,9 +108,9 @@ def load(url: str) -> [webdriver, dict, list]:
     global BADWORDS
     global BADCOMPANY
 
-    JOBTITLE_KEYWORDS = list(map(str.lower, user_info.pop("job title keywords")))
-    BADWORDS = list(map(str.lower, user_info.pop("job title badwords")))
-    BADCOMPANY = list(map(str.lower, user_info.pop("bad companies")))
+    JOBTITLE_KEYWORDS = list(map(str.lower, user_info.pop("Job Title must Contain")))
+    BADWORDS = list(map(str.lower, user_info.pop("Job Title Keywords to Ignore")))
+    BADCOMPANY = list(map(str.lower, user_info.pop("Companies to Ignore")))
 
     try:
         open('log.txt','x').close()
@@ -118,10 +119,9 @@ def load(url: str) -> [webdriver, dict, list]:
     with open('log.txt', 'r+') as file:
         applied_list = list(csv.reader(file, delimiter=':'))
 
-
     options = webdriver.ChromeOptions()
     options.headless = False
-    driver = uc.Chrome(options=options, version_main=117)
+    driver = uc.Chrome(options=options,version_main=117,enable_cdp_events=True)
     driver.set_window_size(1100, 800)
     driver.get(url)
     time.sleep(1)
@@ -155,18 +155,16 @@ def get_description(raw: WebElement) -> list:
 
 def should_apply(current_job: util.JobInfo, applied: list) -> bool:
     ''''''
-    for x in BADCOMPANY:
-        if current_job.company.lower() == x:
-            return True
+
+    if current_job.company.lower() in BADCOMPANY:
+        return True
     for x in applied:
         if len(x) > 0 and current_job.company.lower() == x[0].lower() and current_job.title.lower() == x[1].lower():
             return True
-    for x in current_job.title.split():
-        if x.lower() in BADWORDS:
-            return True
-    for x in current_job.title.split():
-        if x.lower() in JOBTITLE_KEYWORDS:
-            return False
+    if any(i in current_job.title.lower() for i in BADWORDS):
+        return True
+    if any(i in current_job.title.lower() for i in JOBTITLE_KEYWORDS):
+        return False
     return True
 
 
