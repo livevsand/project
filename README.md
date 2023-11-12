@@ -17,6 +17,7 @@ Can use ChatGPT to write cover letters and answer more complicated questions ex.
    
 # Notes
 I recommend making a dedicated Gmail account, Google Voice and LinkedIn profile for this program
+
 Wait until the systems has logged in before you tab out
 
 # Job App Process
