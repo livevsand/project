@@ -9,16 +9,14 @@ Can use chatgpt to write cover letters and answer more complicated questions ex.
 
 # Start Up
 1. Run GUI.exe and fill in requested information
-2. Put your resume in user_info as Resume.pdf
-3. you must provided job titles for the program to find
-4. get a link for glassdoor like https://www.glassdoor.com/Job/software-engineering-jobs-SRCH_KO0,20.html
-5. run main.exe with given link
-6. wait 10 secounds then minimize let the code work
+2. you must provided job titles for the program to find
+3. get a link for glassdoor like https://www.glassdoor.com/Job/software-engineering-jobs-SRCH_KO0,20.html
+4. run main.exe with given link
+5. wait 10 secounds then minimize let the code work
 
    
 # Notes
 Wait until the systems has logged in before you tab out
-Chat Gpt disabled
 
 # Job App Process
 1. Access job hosting site and login
