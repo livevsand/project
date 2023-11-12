@@ -5,17 +5,18 @@ work in progress
 # Features
 Applies to jobs found from provided job hosting site url.  
 Desingned to be run tabed out or on other monitor.  
-Can use chatgpt to write cover letters and answer more complicated questions ex. (Why do you want to work here?)  
+Can use ChatGPT to write cover letters and answer more complicated questions ex. (Why do you want to work here?)  
 
 # Start Up
-1. Run GUI.exe and fill in requested information
-2. you must provided job titles for the program to find
-3. get a link for glassdoor like https://www.glassdoor.com/Job/software-engineering-jobs-SRCH_KO0,20.html
-4. run main.exe with given link
-5. wait 10 secounds then minimize let the code work
+1. Run Startup.exe and fill in requested information
+2. You must provided job titles for the program to find
+3. Get a link for glassdoor like https://www.glassdoor.com/Job/software-engineering-jobs-SRCH_KO0,20.html
+4. Run Auto App.exe with given link
+5. Wait 10 secounds then minimize let the code work
 
    
 # Notes
+I recommend making a dedicated Gmail account, Google Voice and LinkedIn profile for this program
 Wait until the systems has logged in before you tab out
 
 # Job App Process
@@ -26,11 +27,11 @@ Wait until the systems has logged in before you tab out
 5. If we do not have a reponse and chatgpt enabled ask chat gpt else use defalut response
 6. If an error is encoutered switch tabs back to job host site leave page for user to fill out later
 
-# Chat gpt Process
-1. Login to chat gpt useing front end not API
-2. Give chat gpt your previous work experience taken from your resume and a brief description of user
-3. Give chat gpt job description ask to parse into about the company, requirments and duties
-4. Give chat gpt the question to be answered or just ask for a cover letter
+# ChatGPT Process
+1. Login into ChatGPT using front end not API
+2. Give ChatGPT your previous work experience taken from your resume and a brief description of user
+3. Give ChatGPT job description ask to parse into about the company, requirments and duties
+4. Give ChatGPT the question to be answered or just ask for a cover letter
 5. Send reponse back to job application form
 
 # Job Listing Site
@@ -58,6 +59,4 @@ Wait until the systems has logged in before you tab out
 python scripts provied in source code folder compile with psgcompiler
 
 # issues
-you will have to use command prompt to stop program
-
-Has Chat GPT intergration for personalized responses and cover letter generation
+glassdoor not loading new page
