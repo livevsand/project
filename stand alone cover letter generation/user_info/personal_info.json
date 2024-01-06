@@ -1,0 +1,10 @@
+{
+  "name": "name",
+  "address": "555 dunwitch ave",
+  "location":"Seattle",
+  "zip":"98325",
+  "phone":"5555555555",
+  "email":"test@gmail.com",
+  "chatgpt email":"test@gmail.com",
+  "chatgpt password":"test"
+}

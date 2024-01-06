@@ -1,0 +1,87 @@
+{
+  "work experience": [
+    {
+      "job title": "Founding Software Engineer",
+      "company": "Startup",
+      "duties": [
+        "one.",
+	"two.",
+	"three."
+      ]
+    },
+    {
+      "job title": "Engineer",
+      "company": "temp",
+        "one.",
+	"two.",
+	"three."
+      ]
+    },
+    {
+      "job title": "Teaching Assistant",
+      "company": "Univeristy",
+      "duties": [
+        "one.",
+	"two.",
+	"three."
+      ]
+    },
+    {
+      "job title": "Undergraduate Researcher",
+      "company": "University",
+      "duties": [
+        "one.",
+	"two.",
+	"three."
+      ]
+    }
+  ],
+  "project experience": [
+    {
+      "job title": "1",
+      "duties": [
+        "one.",
+	"two.",
+	"three."
+      ]
+    },
+    {
+      "job title": "2",
+      "duties": [
+        "one.",
+	"two.",
+	"three."
+      ]
+    },
+    {
+      "job title": "3",
+      "duties": [
+        "one.",
+	"two.",
+	"three."
+      ]
+    },
+    {
+      "job title": "4",
+      "duties": [
+        "one.",
+	"two.",
+	"three."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "school": "University",
+      "degree": "Master",
+      "major": "Computer Engineering",
+      "gpa": "3.5",
+    },
+    {
+      "school": "State University",
+      "degree": "Bachelor",
+      "major": "Computer Science",
+      "gpa": "3.7",
+    }
+  ]
+}

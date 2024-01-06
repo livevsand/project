@@ -1,0 +1,36 @@
+Machine Learning Engineer - Secret Clearance
+
+California | Remote
+
+CA $160,000-180,000 base salary + benefits
+
+
+THE COMPANY: 
+
+A growing AI startup working with enterprise organizations and defense agencies
+
+
+THE ROLE
+
+
+    Work on machine learning models end to end and deploy them at scale
+    Assist with the maintenance of deployed models
+    Work with different leads on different projects for clients
+    Work with clients and projects - own the end-to-end process from inception to deployment
+
+
+
+
+YOUR SKILLS AND EXPERIENCE
+
+A successful Machine Learning Engineer will likely have the following skills and experience:
+
+
+    Master's degree or equivalent in Computer Science or Electrical Engineering
+    4+ years of developing machine learning models and deploying them to production
+    MUST HAVE at least secret clearance
+    Strong background in data structures and algorithms
+    Experience with time series modeling or temporal data sets is a plus
+    Self-driven, strong work ethic focused on high-quality results
+    Tools: Python, SQL, Git
+    
