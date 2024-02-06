@@ -1,4 +1,5 @@
 {
+  "task": "Write a humanized cover letter using the resume to match the skills from the last prompt.",
   "first paragraph": "short and brief impact statement. Lead with an impressive accomplishment.",
   "secound paragraph": "Mention one experience from the resume. Address multiple responsibilities and cite duties from the resume with examples of how you are qualifed.",
   "third paragraph": "Mention another experiences from the resume. Address multiple responsibilities and cite duties from the resume with examples of how you are qualifed.",
